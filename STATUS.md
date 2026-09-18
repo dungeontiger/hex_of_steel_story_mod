@@ -20,3 +20,4 @@
 - Initial baseline includes AGENTS.md, SPEC.md, BRANDING.md, STATUS.md, and both branding images. No implementation changes were made; no tests exist to run.
 - Follow-up research: the Steam modding discussion was successfully read in the Codex in-app browser without signing in. It links an advanced tutorial (https://youtu.be/5ckaIcOEZww), Harmony template and example repositories, a modding README, and a game code map. These resources still need technical review.
 - User preference: notify the user if future Steam access requires signing in; the user will handle authentication.
+- Created the private repository and pushed the initial baseline to main. Four additional branding source assets appeared during setup (three PSD files and one AI file); included them in a follow-up commit to capture the complete current project. Verified remote main matches the local commit after pushing.
