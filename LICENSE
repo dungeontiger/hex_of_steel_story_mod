@@ -1,0 +1,76 @@
+KING TIGER BOOKS VIEWING-ONLY LICENSE
+Version 1.0
+
+Copyright (c) 2026 Stephen D. Gibson, operating as King Tiger Books.
+All rights reserved.
+
+1. Scope
+
+This license applies to the original code, documentation, images, branding,
+and other material in this repository for which Stephen D. Gibson holds the
+applicable rights (the "Material"), unless a particular item expressly states
+different terms. Third-party material remains subject to its own terms.
+This license grants no rights in Hex of Steel or other third-party property.
+
+2. Limited permission to view
+
+You may view and read the Material solely for inspection and understanding.
+Incidental technical copies necessary to display the Material for that
+purpose, such as browser caches, are permitted. This is a limited viewing
+permission, not a license to operate or reuse the project.
+
+3. Uses requiring prior written permission
+
+Except as permitted in sections 2 and 4, you must obtain prior written
+permission from Stephen D. Gibson before:
+
+- downloading or copying the Material;
+- compiling, building, executing, deploying, or otherwise using the Material
+  as software, including for personal, educational, or noncommercial use;
+- modifying, translating, adapting, or creating derivative works of the
+  Material;
+- distributing, publishing, selling, sublicensing, or otherwise making
+  copies of the Material available to others; or
+- incorporating any part of the Material into another product, service,
+  project, or dataset.
+
+No trademark or branding rights are granted except as necessary to display
+the Material under the viewing permission above. Retain all copyright,
+license, and attribution notices in any permitted copies.
+
+4. GitHub platform rights and applicable law
+
+Nothing in this license limits rights granted to GitHub or its users under
+GitHub's applicable Terms of Service, including rights to view and fork a
+public repository through the service as permitted by GitHub's functionality.
+Those rights do not grant a separate general license to run, modify,
+redistribute, or reuse the Material outside the scope of those terms.
+
+Nothing in this license restricts rights or exceptions that applicable law
+provides independently of permission from the copyright holder.
+
+5. Requesting permission
+
+Permission requests may be addressed to Stephen D. Gibson (@dungeontiger)
+through an issue at:
+https://github.com/dungeontiger/hex_of_steel_story_mod/issues
+
+Identify the Material and describe the intended use. Permission is granted
+only by explicit written authorization from Stephen D. Gibson and only to
+the extent stated in that authorization. Public availability, submission of
+a request, or absence of a response does not grant additional permission.
+A separate written agreement may grant additional rights to its recipient.
+
+6. No warranty; limitation of liability
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE MATERIAL IS PROVIDED
+"AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE,
+AND NON-INFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE
+FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM OR IN CONNECTION
+WITH THE MATERIAL OR ITS USE, WHETHER IN CONTRACT, TORT, OR OTHERWISE.
+
+7. Reserved rights
+
+All rights not expressly granted are reserved. This is a proprietary,
+source-available license, not an open-source license.

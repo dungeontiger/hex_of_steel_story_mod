@@ -21,3 +21,12 @@
 - Follow-up research: the Steam modding discussion was successfully read in the Codex in-app browser without signing in. It links an advanced tutorial (https://youtu.be/5ckaIcOEZww), Harmony template and example repositories, a modding README, and a game code map. These resources still need technical review.
 - User preference: notify the user if future Steam access requires signing in; the user will handle authentication.
 - Created the private repository and pushed the initial baseline to main. Four additional branding source assets appeared during setup (three PSD files and one AI file); included them in a follow-up commit to capture the complete current project. Verified remote main matches the local commit after pushing.
+
+## 2026-09-18 — Public repository documentation and license
+
+- Confirmed the repository is public following the user's visibility change.
+- Added README.md describing the planning-stage status, intended features, first-release limitations, repository contents, feedback route, and permission requirements, reflecting the updated SPEC.md without changing it.
+- Added LICENSE with a custom viewing-only license in the name of Stephen D. Gibson, operating as King Tiger Books. Execution, building, modification, redistribution, and reuse require prior written permission, subject to applicable law and GitHub platform rights.
+- Checked GitHub's official licensing guidance and Terms of Service: public repositories permit viewing and forking through GitHub, so the license expressly preserves those rights. The project is described as source-available, not open source.
+- Future playable releases require explicit permission or separate release terms; planned Steam Workshop distribution does not grant current usage rights.
+- Validation for this documentation-only change: review against the specification, local README link checks, and Git whitespace checks. No implementation or test suite exists, so code tests do not apply.
