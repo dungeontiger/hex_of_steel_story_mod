@@ -43,3 +43,13 @@
 - Remaining acceptance work: interactive Unity/gameplay smoke tests from docs/DEVELOPMENT.md, actual PBEM round trip, readable PDF visual acceptance, and Workshop publication. Automated desktop tests do not establish full in-game hook behavior.
 - Remaining requirements: automatic email delivery (player recipient addresses unavailable through the inspected adapter), maps/screenshots, richer historical prose, and later cross-player history transfer. No external email was sent and no Workshop item was published.
 - Source control: configured SSH remote was reachable and matched the prior local baseline before commit. This implementation and validation record are being committed and pushed together.
+
+## 2026-10-21 — Protect campaign attachment and retry
+
+- Reviewed campaign switching and found that Ensure published the new map before reading and validating its journal. A failed attachment could leave the old store associated with the new map, or prevent subsequent attachment retries.
+- Extracted an attachment operation that flushes pending events to the old campaign first, detaches before parsing the next marker, and publishes the new map/store only after journal and branch validation. Failed attachment remains disabled and retryable. The previous campaign's PDF shortcut clears on detachment.
+- Recording readiness now requires the attached map to be the current map. This also prevents cross-campaign recording when flushing the old journal fails. Failure events are queued only for the currently attached campaign; diagnostics still capture attachment errors.
+- Applied the game-testing skill. Added four installed-game integration regression cases for malformed markers, corrupt journals, unconfirmed branches, and disk-lock failures. Tests exercise the actual runtime attachment operation with real journals and game Map identities, without invoking Unity engine constructors. They verify isolation, preservation of pending events, and successful retries.
+- Extended the in-game acceptance checklist with campaign-switch and recovery checks plus evidence to retain. Interactive Unity/gameplay and PBEM validation remain outstanding; no claim of in-game acceptance is made.
+- Validation: complete Debug and Release build/test/package runs passed with 33 core tests and 9 game integration tests each (42 total), zero warnings/errors. Both package content checks passed.
+- Pre-commit review covered attachment failure ordering, map identity checks, pending-event ownership, retry, test cleanup, and unchanged save-marker validation. The review added the map identity guard and disk-lock regression before final validation. Changes are being committed and pushed to GitHub.

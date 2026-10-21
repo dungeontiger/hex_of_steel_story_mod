@@ -66,7 +66,8 @@ internal static class Runtime
     private static CancellationTokenSource lifetime = new CancellationTokenSource();
     private static int reporting;
     internal static bool IsReporting => Volatile.Read(ref reporting) != 0;
-    internal static bool IsReady => !disabled && Store != null && map != null && MapGO.instance != null && !GameData.Instance.isFromMapEditor;
+    internal static bool HasHistoryFor(Map? candidate) => !disabled && Store != null && map != null && ReferenceEquals(map, candidate);
+    internal static bool IsReady => HasHistoryFor(GameData.Instance.map) && MapGO.instance != null && !GameData.Instance.isFromMapEditor;
     internal static int Turn => GameData.Instance.map?.turnCount ?? 0;
     internal static string Date => GameData.Instance.map?.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) ?? "";
     internal static void Initialize(string location)
@@ -89,7 +90,7 @@ internal static class Runtime
     {
         log?.Failure(context + "; turn=" + Turn + "; campaign=" + (Store?.CampaignId ?? "none"), ex);
         Notice = "Story mod: " + context + " failed (" + ex.GetType().Name + "). See story-diagnostics.log. Recording will retry where possible.";
-        if (failing || Store == null) return;
+        if (failing || !HasHistoryFor(GameData.Instance.map)) return;
         failing = true;
         try { pending.Enqueue(new StoryEvent { Turn = Turn, GameDate = Date, Kind = "Failure", Description = context + " failed: " + ex.GetType().Name + "." }); }
         finally { failing = false; }
@@ -137,22 +138,31 @@ internal static class Runtime
         var data = GameData.Instance;
         if (data.map == null || data.listOfPlayers == null || data.isFromMapEditor) return;
         if (ReferenceEquals(map, data.map)) return;
-        if (pending.Count > 0) Flush();
-        map = data.map;
-        previous.Clear(); objectiveOwners.Clear(); disabled = false;
-        SaveMarker marker;
-        if (data.ModDataBag.TryGet(MarkerKey, out string value)) marker = Json.Decode<SaveMarker>(value);
-        else
+        AttachHistory(data.map, () =>
         {
-            marker = new SaveMarker();
+            if (data.ModDataBag.TryGet(MarkerKey, out string value)) return Json.Decode<SaveMarker>(value);
+            var marker = new SaveMarker();
             if (!data.ModDataBag.TrySet(MarkerKey, Json.Encode(marker))) throw new InvalidOperationException("Cannot store story identity in save.");
-        }
-        Store = new HistoryStore(directory, marker.CampaignId);
-        // PrepareLoad already reconciles rewinds. Ensure never silently replaces data.
-        if (Store.NeedsRewind(marker)) { disabled = true; throw new InvalidDataException("Unconfirmed history branch."); }
+            return marker;
+        });
         Notice = "Recording this installation's observed events. F8 opens the history.";
-        if (Store.RecoveredTail) Fail("Recovered incomplete journal tail; original retained", new InvalidDataException());
+        if (Store!.RecoveredTail) Fail("Recovered incomplete journal tail; original retained", new InvalidDataException());
         log?.Trace("Attached campaign " + Store.CampaignId);
+    }
+    internal static void AttachHistory(Map nextMap, Func<SaveMarker> readMarker)
+    {
+        // Flush the old campaign first. Publish the new attachment only after all validation succeeds.
+        if (pending.Count > 0) Flush();
+        disabled = true;
+        map = null; Store = null;
+        previous.Clear(); objectiveOwners.Clear(); LastReport = "";
+        var marker = readMarker();
+        var candidate = new HistoryStore(directory, marker.CampaignId);
+        // PrepareLoad already reconciles rewinds. Ensure never silently replaces data.
+        if (candidate.NeedsRewind(marker)) throw new InvalidDataException("Unconfirmed history branch.");
+        Store = candidate;
+        map = nextMap;
+        disabled = false;
     }
     internal static void Record(string kind, string nation, string description)
     {

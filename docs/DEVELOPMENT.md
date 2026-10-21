@@ -39,6 +39,9 @@ Use a disposable scenario and back up any save before testing.
 7. Configure an unavailable model; verify a factual PDF is still generated and future turns continue recording. Use a disposable output location for disk-failure tests.
 8. Disable/re-enable the mod and verify patches and the history window do not duplicate. Repeat the main flow with the Release package.
 9. Test one PBEM round trip. Confirm the same campaign identity returns, and document any server-side stripping of mod data. Email and cross-player merging are not validated.
+10. Switch between two disposable campaigns. Confirm that each viewer shows only its own history and the Open PDF button clears on attachment. If attaching the second campaign fails, confirm its events never enter the first journal; restore the matching history and confirm recording can retry. Capture the diagnostic log and both journal files as evidence.
+
+Campaign attachment regressions also run against the installed game assembly without starting Unity: malformed markers, corrupt journals, unconfirmed branches, and a locked old journal. These verify that attachment failure prevents recording into the wrong campaign, preserves pending old-campaign events, and permits retry after recovery. They do not replace the interactive campaign-switch check.
 
 Full Unity patch application cannot be tested in the desktop CLR: it rejects Unity internal calls. A failed exploratory full-patch desktop test was replaced with a managed-method Harmony integration test; full patch application remains an explicit in-game acceptance check.
 
