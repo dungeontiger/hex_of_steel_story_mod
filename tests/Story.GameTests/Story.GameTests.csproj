@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net48</TargetFramework><IsPackable>false</IsPackable><IsTestProject>true</IsTestProject><AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects></PropertyGroup>
+  <ItemGroup><Reference Include="netstandard"><Private>true</Private></Reference>
+    <ProjectReference Include="../../src/Story.Mod/Story.Mod.csproj" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" PrivateAssets="all" />
+    <Reference Include="Assembly-CSharp"><HintPath>$(GameManagedPath)/Assembly-CSharp.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(GameManagedPath)/UnityEngine.CoreModule.dll</HintPath></Reference>
+  </ItemGroup>
+  <Target Name="CopyGameRuntimeForLocalTests" AfterTargets="Build">
+    <ItemGroup><Reference Include="netstandard"><Private>true</Private></Reference><GameRuntime Include="$(GameManagedPath)/*.dll" Exclude="$(GameManagedPath)/System*.dll;$(GameManagedPath)/Microsoft*.dll;$(GameManagedPath)/mscorlib.dll;$(GameManagedPath)/netstandard.dll;$(GameManagedPath)/Mono*.dll" /></ItemGroup>
+    <Copy SourceFiles="@(GameRuntime)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+  </Target>
+</Project>

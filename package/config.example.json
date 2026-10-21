@@ -1,0 +1,6 @@
+{
+  "Endpoint": "",
+  "Model": "",
+  "ApiKeyEnvironmentVariable": "HOS_STORY_API_KEY",
+  "TimeoutSeconds": 45
+}

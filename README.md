@@ -1,59 +1,65 @@
 # Hex of Steel Story Mod
 
-Turn a Hex of Steel campaign into a recorded history of its battles, diplomacy, and turning points.
+Record a campaign's events and turn them into a readable history of its battles, diplomacy, and turning points.
 
 A project by **Stephen D. Gibson**, operating as **King Tiger Books**.
 
 ## Current status
 
-**Planning and feasibility stage.** This repository contains the project specification, development notes, and branding assets. There is no playable mod, installation package, implementation, build process, or test suite yet.
+**Version 0.1.0: initial Windows build, ready for in-game validation.** The project now builds a Hex of Steel code mod, a durable history recorder, an in-game viewer, and a branded PDF report generator. Debug and Release configurations and automated tests are included.
 
-The project is public so friends and other interested readers can follow its development. Public visibility does not grant permission to run or reuse the project; see [License and permissions](#license-and-permissions).
+The complete mod still needs an interactive smoke test in Hex of Steel. Automatic email delivery is blocked on access to recipient addresses; maps/screenshots in reports and cross-player history merging are not implemented. This is not yet a published Steam Workshop release.
 
-## Planned features
+## Implemented capabilities
 
-- Record events by turn and nation, including combat losses, diplomacy, policies, equipment availability, promotions, heroes, captured objectives, and weather.
-- Keep the event history alongside the saved game and make it accessible through an in-game viewer.
-- Summarize each nation's accomplishments and setbacks.
-- Generate a factual, readable end-of-game history as a branded PDF, with maps and images where appropriate.
-- Support a player-configured language model, with local model support a possible future addition.
-- Email the completed history to the game's players, subject to verifying access to player contact information.
+- Observe diplomacy, policies, factions, money transfers, unit kills, promotions, heroes, victory points, equipment availability, weather, and turn summaries through game hooks and state comparisons.
+- Append events durably, with in-game dates, real-world timestamps, nation, event type, and event identity.
+- Associate history with saves; warn before replacing later history when reloading an older save, and recover a missing journal from its matching save-adjacent history.
+- View recorded history using **F8** or the **Story** button.
+- Generate a King Tiger Books PDF automatically at game end or manually for an interim or abandoned campaign.
+- Produce a factual history without an LLM. An optional compatible remote or local model can select recorded highlights; unavailable or invalid model output falls back to the offline report.
 
-These are intended capabilities, not currently available features. [SPEC.md](SPEC.md) is the source of truth for requirements.
+Only this installation's observed events are recorded. Other PBEM players' events may be absent, and the viewer can reveal fog-of-war information, as accepted in the initial specification. The record starts when the mod is enabled; it does not reconstruct prior turns.
 
-## Initial scope and limitations
+## Build and install
 
-The mod is primarily intended for play-by-email (PBEM) games, with single-player support also planned. The initial design runs for one player, so other players' events may be absent from the history. Combining histories across players is future work.
+Requirements: Windows, the .NET 8 SDK for building, and a licensed installed copy of Hex of Steel with code-modding support. The mod targets .NET Framework 4.8, matching the developer's template. The first build was compiled and checked against Steam build **25347843**; compatibility with every version from the specification's 8.0.0 minimum is not claimed.
 
-The current specification accepts the possibility that the event viewer exposes information normally hidden by fog of war; visibility safeguards are deferred to a later release.
+```powershell
+./scripts/build.ps1 -Configuration Release
+```
 
-The specification targets **Hex of Steel 8.0.0 or later** and eventual distribution through the **Steam Workshop**. Compatibility, event capture, and installation still need to be implemented and verified. There is nothing to install yet.
+The script builds, runs tests, and creates `artifacts/KingTigerStory-0.1.0-Release.zip`. Use `-Configuration Debug` for symbols and verbose diagnostics, or `-GamePath` for another Steam library.
+
+See [Installation and use](docs/INSTALL.md) for enabling the mod, report locations, optional model configuration, recovery, and known limits. See [Development and validation](docs/DEVELOPMENT.md) for the architecture and in-game acceptance checklist.
 
 ## Repository guide
 
-| File or folder | Purpose |
+| Path | Purpose |
 | --- | --- |
-| [SPEC.md](SPEC.md) | Project requirements and game/modding references |
-| [STATUS.md](STATUS.md) | Dated progress notes, findings, and decisions |
-| [BRANDING.md](BRANDING.md) | Author and publishing identity |
-| [branding_images/](branding_images/) | Branding images and editable source assets |
-| [AGENTS.md](AGENTS.md) | Development, testing, and documentation instructions |
-| [LICENSE](LICENSE) | Restrictive viewing permission and reserved rights |
+| [SPEC.md](SPEC.md) | Requirements and game/modding references |
+| [STATUS.md](STATUS.md) | Dated progress, findings, and remaining work |
+| [src/](src/) | Portable core and game adapter |
+| [tests/](tests/) | Core, integration, and journal-to-PDF tests |
+| [scripts/](scripts/) | Build and package scripts |
+| [docs/](docs/) | Installation and development instructions |
+| [BRANDING.md](BRANDING.md), [branding_images/](branding_images/) | Author identity and branding assets |
+| [AGENTS.md](AGENTS.md) | Development and review instructions |
+| [LICENSE](LICENSE) | Viewing permission and reserved rights |
+| [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) | Dependency licenses and exclusions |
 
 ## Feedback and permission requests
 
-Questions and suggestions are welcome through [GitHub issues](https://github.com/dungeontiger/hex_of_steel_story_mod/issues). To request permission to use or modify the project, address a request to **Stephen D. Gibson (@dungeontiger)** there, describing the material and intended use. A request, silence, or an issue discussion does not itself grant permission; explicit written authorization is required.
+Questions and suggestions are welcome through [GitHub issues](https://github.com/dungeontiger/hex_of_steel_story_mod/issues). Address permission requests to **Stephen D. Gibson (@dungeontiger)**, describing the material and intended use. Explicit written authorization is required; a request or silence does not grant permission.
 
-Please obtain permission before preparing code or asset contributions. Do not include passwords, API keys, player email addresses, or private save data in public issues.
+Obtain permission before preparing contributions. Do not post passwords, API keys, player email addresses, or private save data in public issues. Game assemblies and decompiled API references are not distributed in this repository.
 
 ## License and permissions
 
 Copyright (c) 2026 Stephen D. Gibson, operating as King Tiger Books. All rights reserved.
 
-This is **source-available, not open-source software**. The custom [LICENSE](LICENSE) permits viewing and reading for inspection. Running, building, modifying, distributing, or incorporating the material into another project requires prior written permission, except for rights provided by applicable law or GitHub's Terms of Service.
+This is **source-available, not open-source software**. The custom [LICENSE](LICENSE) permits viewing and reading for inspection. Building, running, modifying, distributing, or reusing original project material requires prior written permission, subject to applicable law and GitHub's Terms of Service. Third-party libraries retain their own license terms.
 
-GitHub's terms permit viewing and forking public repositories through its service. Those platform rights do not constitute general permission to use this project. See [GitHub's licensing guidance](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository).
+GitHub permits viewing and forking public repositories through its service; this does not constitute a general license to use the project. See [GitHub's licensing guidance](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository).
 
-Any future playable release will need an explicit grant of permission or separate release terms; a planned Workshop release does not grant permission now.
-
-Hex of Steel and third-party materials remain the property of their respective owners. This is an independent project and is not presented as an official game release or endorsement.
+A planned Workshop release does not grant permission now. Hex of Steel and third-party materials remain the property of their respective owners. This independent project is not an official game release or endorsement.

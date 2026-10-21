@@ -1,0 +1,8 @@
+{
+  "modName": "King Tiger Story",
+  "modVersion": "0.1.0",
+  "modAuthor": "Stephen D. Gibson / King Tiger Books",
+  "supportedGameVersion": "8.0.0+ (verify code API compatibility)",
+  "dependencies": "Hex of Steel; Windows; included Harmony and PDFsharp libraries",
+  "modDescription": "Records observed campaign events and creates a factual, branded PDF history. One-player initial release. History can reveal fog-of-war information."
+}

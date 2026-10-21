@@ -1,0 +1,12 @@
+.tools/
+**/bin/
+**/obj/
+artifacts/
+TestResults/
+*.user
+*.suo
+.vs/
+config.local.json
+*.sav
+*.story.json
+*.journal.jsonl
